@@ -29,7 +29,7 @@ def search_add(context, data_dict):
     '''
     tk.check_access('search_history_add', context, data_dict)
     if db.search_history_table is None:
-        db.init_db(context['model'])
+        db.init_db()
 
     data, errors = df.validate(data_dict, schema_add, context)
 
@@ -54,14 +54,14 @@ def search_list(context, data_dict):
     :type limit: int
     '''
     if db.search_history_table is None:
-        db.init_db(context['model'])
+        db.init_db()
 
     tk.check_access('search_history_list', context, data_dict)
 
     username = context.get('user')
     user = new_authz.get_user_id_for_username(username, allow_none=False)
     # Get the limit and put a hard upper limit on it
-    limit = data_dict.get('limt', 10)
+    limit = data_dict.get('limit', 10)
     if limit > 25:
         limit = 25
 
